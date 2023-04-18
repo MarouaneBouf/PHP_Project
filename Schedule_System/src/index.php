@@ -75,4 +75,8 @@
             header("Location: error.html");
         }
     }
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> 744737191baa7d1136bc7b9fb88d3561a06ea1e4
