@@ -33,7 +33,7 @@
 
             </div>
             <div id="btns">
-                <button id="new_acc" type="submit">Login here</button>
+                <button id="new_acc" type="submit" name="submit">Login here</button>
                 <button id="google">
                     <div id="google_div">
                         <img src="./images/Google Logo.png" alt="Google Logo" width="7%" />
@@ -54,24 +54,25 @@
 <?php
     session_start();
     ini_set('display_errors', 0);
-    $boolean_res = false;
-    $login_name = $_POST['NAME'];
-    $query = "SELECT nom FROM etudiants";
 
-    $res = mysqli_query($conn, $query);
-    $arr = mysqli_fetch_all($res);
-    foreach($arr as $name){
-        if($name[0] === $login_name){
-            $boolean_res = true;
+    // check if the login form has been submitted
+    if(isset($_POST['submit'])){
+
+        // retrieve the login name from the form
+        $login_name = $_POST['NAME'];
+
+        // prepare the SQL statement
+        $stmt = $conn->prepare("SELECT * FROM etudiants WHERE nom = ?");
+        $stmt->bind_param("s", $login_name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // check if the login name exists in the database
+        if ($result->num_rows > 0) {
+            $_SESSION['NAME'] = $login_name;
+            header("Location: etudiant.php");
+        } else {
+            header("Location: error.html");
         }
-    }
-    if($boolean_res){
-        // $message = "Welcome Back, {$login_name}!";
-        $_SESSION['login_name'] = $login_name;
-        header("Location: etudiant.php");
-        // $js_code = "alert('$message');";
-    }
-    else if($login_name!="" && !$boolean_res){
-        header("Location: error.html");
     }
 ?>
