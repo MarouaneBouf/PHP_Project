@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
     <div id="container">
         <div id="left-section">
             <img src="./images/Design-TIME1.jpg" alt="Photograph" width="100%" />
@@ -41,7 +42,7 @@
                     </div>
                 </button>
                 <p id="last_question">
-                    Don't have an account? <span id="span_log"><a href="./home.php">Sign up</a></span>
+                    Are you a porfessor? <span id="span_log"><a href="./login_prof.php">Switch</a></span>
                 </p>
             </div>
             </form>
@@ -66,17 +67,25 @@
         $stmt->bind_param("s", $login_name);
         $stmt->execute();
         $result = $stmt->get_result();
-
         // check if the login name exists in the database
         if ($result->num_rows > 0) {
             $_SESSION['NAME'] = $login_name;
             header("Location: etudiant.php");
-        } else {
+            exit();
+        }
+        $query = "SELECT * FROM professeurs WHERE nom_prf = '$login_name'";
+        $result1 = mysqli_query($conn, $query);
+
+        // Check If Professor
+        if (mysqli_num_rows($result1) == 1) {
+            $_SESSION['NAME'] = $login_name;
+            header("Location: professor_info.php");
+            //exit();
+        } 
+        else {
             header("Location: error.html");
         }
+
+
     }
-<<<<<<< HEAD
 ?>
-=======
-?>
->>>>>>> 744737191baa7d1136bc7b9fb88d3561a06ea1e4
