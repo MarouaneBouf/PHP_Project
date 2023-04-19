@@ -16,8 +16,7 @@ The system will have the following entities:
 
 The following features are included in the system:
 - [x] Students can view available courses and register for them
-- [ ] Professors can create courses and manage them
-- [ ] Administrators can manage student and professor accounts, and view course registrations
+- [x] Professors can view their courses
 - [x] Registrations track which students are registered for which courses, and who is teaching each course
 
 ## Technologies
